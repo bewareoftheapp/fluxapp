@@ -4,7 +4,13 @@
 
 {% block content %}
 
-<form method="POST" target="{% url 'login' %}">
+<form method="POST" action="{% url 'login' %}">
+    {% csrf_token %}
+    {% if auth_error %}
+    <div>
+        Usuário ou senha incorretos.
+    </div>
+    {% endif %}
     <div>
         <label>
             Usuário
