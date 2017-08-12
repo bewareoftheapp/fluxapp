@@ -1,18 +1,25 @@
-{% extends "main.base.html" %}
+{% extends "base.html" %}
 
 {% load staticfiles %}
 
 {% block content %}
 
-    <form method="POST" target="{% url 'login' %}">
+<form method="POST" target="{% url 'login' %}">
+    <div>
         <label>
             Usuário
             <input name="username" />
         </label>
+    </div>
+    <div>
         <label>
             Senha
             <input type="password" name="password" />
         </label>
-    </form>
+    </div>
+    <div>
+        <input type="submit" value="Entrar"/>
+    </div>
+</form>
 
 {% endblock %}
