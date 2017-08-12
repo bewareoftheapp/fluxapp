@@ -20,7 +20,7 @@ def login_POST(request):
     auth = authenticate(username=login_data[0], password=login_data[1])
     if auth:
         login(request, auth)
-        render(request, 'login.html')
+        return render(request, 'login.html')
     else:
         data = {'auth_error': True}
         return render(request, 'login.html', data)
