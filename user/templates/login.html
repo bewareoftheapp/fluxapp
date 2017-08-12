@@ -1,0 +1,18 @@
+{% extends "main.base.html" %}
+
+{% load staticfiles %}
+
+{% block content %}
+
+    <form method="POST" target="{% url 'login' %}">
+        <label>
+            Usuário
+            <input name="username" />
+        </label>
+        <label>
+            Senha
+            <input type="password" name="password" />
+        </label>
+    </form>
+
+{% endblock %}
