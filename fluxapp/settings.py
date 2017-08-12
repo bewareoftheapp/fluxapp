@@ -10,7 +10,8 @@ https://docs.djangoproject.com/en/1.8/ref/settings/
 """
 
 import os
-# import dj_database_url
+import dj_database_url
+from fluxapp import conf
 
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
@@ -29,29 +30,11 @@ DEBUG = True
 
 
 # Application definition
+INSTALLED_APPS = conf.installedapps.value
 
-INSTALLED_APPS = (
-    'django.contrib.admin',
-    'django.contrib.auth',
-    'django.contrib.contenttypes',
-    'django.contrib.sessions',
-    'django.contrib.messages',
-    'django.contrib.staticfiles',
-    'main'
-)
+MIDDLEWARE_CLASSES = conf.middlewareclasses.value
 
-MIDDLEWARE_CLASSES = (
-    'django.contrib.sessions.middleware.SessionMiddleware',
-    'django.middleware.common.CommonMiddleware',
-    'django.middleware.csrf.CsrfViewMiddleware',
-    'django.contrib.auth.middleware.AuthenticationMiddleware',
-    'django.contrib.auth.middleware.SessionAuthenticationMiddleware',
-    'django.contrib.messages.middleware.MessageMiddleware',
-    'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'django.middleware.security.SecurityMiddleware',
-)
-
-ROOT_URLCONF = 'gettingstarted.urls'
+ROOT_URLCONF = 'fluxapp.urls'
 
 TEMPLATES = [
     {
@@ -70,7 +53,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'gettingstarted.wsgi.application'
+WSGI_APPLICATION = 'fluxapp.wsgi.application'
 
 
 # Database
@@ -78,10 +61,14 @@ WSGI_APPLICATION = 'gettingstarted.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': '',
     }
 }
+
+# Update database configuration with $DATABASE_URL.
+db_from_env = dj_database_url.config(conn_max_age=500)
+DATABASES['default'].update(db_from_env)
 
 # Password validation
 # https://docs.djangoproject.com/en/1.9/ref/settings/#auth-password-validators
@@ -110,10 +97,6 @@ USE_I18N = True
 USE_L10N = True
 USE_TZ = True
 
-
-# Update database configuration with $DATABASE_URL.
-# db_from_env = dj_database_url.config(conn_max_age=500)
-# DATABASES['default'].update(db_from_env)
 
 # Honor the 'X-Forwarded-Proto' header for request.is_secure()
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')

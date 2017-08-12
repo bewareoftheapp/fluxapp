@@ -6,7 +6,7 @@ admin.autodiscover()
 
 
 # Examples:
-# url(r'^$', 'gettingstarted.views.home', name='home'),
+# url(r'^$', 'fluxapp.views.home', name='home'),
 # url(r'^blog/', include('blog.urls')),
 
 urlpatterns = [
