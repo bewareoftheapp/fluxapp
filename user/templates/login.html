@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+
+{% load staticfiles %}
+
+{% block content %}
+
+<form method="POST" action="{% url 'login' %}">
+    {% csrf_token %}
+    {% if auth_error %}
+    <div>
+        Usuário ou senha incorretos.
+    </div>
+    {% endif %}
+    <div>
+        <label>
+            Usuário
+            <input name="username" />
+        </label>
+    </div>
+    <div>
+        <label>
+            Senha
+            <input type="password" name="password" />
+        </label>
+    </div>
+    <div>
+        <input type="submit" value="Entrar"/>
+    </div>
+</form>
+
+{% endblock %}
