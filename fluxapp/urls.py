@@ -1,4 +1,5 @@
 import main.views
+import expense.urls
 import user.views
 
 from django.conf.urls import include, url
@@ -14,4 +15,5 @@ urlpatterns = [
     url(r'^$', main.views.index, name='index'),
     url(r'^admin/', include(admin.site.urls)),
     url(r'^login/', user.views.login_page, name='login'),
+    url(r'carteira/', include(expense.urls))
 ]

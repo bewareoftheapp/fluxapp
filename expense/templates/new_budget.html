@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+    <div>
+        <form action="{% url 'new_budget' %}" method="POST">
+            {{ budget_form }}
+        </form>
+    </div>
+
+
+{% endblock %}

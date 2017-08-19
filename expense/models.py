@@ -13,4 +13,5 @@ class Budget(models.Model):
 class Reimburse(models.Model):
 
     requester = models.ForeignKey(User)
-    budget = models.ForeignKey(Budget)
+    value = models.ForeignKey(Budget)
+    description = models.TextField()
