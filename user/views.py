@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout
 
 
 def get_login_data(request):
@@ -32,3 +32,9 @@ def login_page(request):
     else:
         response = login_GET(request)
     return response
+
+
+def logout_user(request):
+    if request.user.is_authenticated():
+        logout(request)
+    return redirect('login')

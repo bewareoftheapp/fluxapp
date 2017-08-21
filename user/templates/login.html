@@ -4,33 +4,20 @@
 
 {% block content %}
 
-<form method="POST" action="{% url 'login' %}">
-    {% csrf_token %}
-    {% if auth_error %}
-    <div>
-        Usuário ou senha incorretos.
-    </div>
-    {% endif %}
-
-
+    <form method="POST" action="{% url 'login' %}">
+        {% csrf_token %}
+        {% if auth_error %}
+        <div>Usuário ou senha incorretos.</div>
+        {% endif %}
         <div class="grid-x grid-margin-x">
-
-								<div class="small-10 large-4 small-offset-1 large-offset-4 cell">
-									<div class="callout">
-
-										Usuario<input type="text" id="middle-label" placeholder="Usuario" >
-
-										Senha<input type="password" id="middle-label" placeholder="Senha">
-
-
-										    <p><button type="submit" class="success button">Entrar</button>
-										    <button type="submit" class="alert button">Cancelar</a>
-
-
-                                    </div>
-
-                                </div>
+            <div class="small-10 medium-6 large-4 small-offset-1 medium-offset-3 large-offset-4 cell">
+                <div class="callout">
+                    <label>Usuario<input type="text" name="username" placeholder="Usuario" ></label>
+                    <label>Senha<input type="password" name="password" placeholder="Senha"></label>
+                    <button class="success button expanded">Entrar</button>
+                </div>
+            </div>
         </div>
-   </form>
+    </form>
 
 {% endblock %}
