@@ -11,21 +11,26 @@
         Usuário ou senha incorretos.
     </div>
     {% endif %}
-    <div>
-        <label>
-            Usuário
-            <input name="username" />
-        </label>
-    </div>
-    <div>
-        <label>
-            Senha
-            <input type="password" name="password" />
-        </label>
-    </div>
-    <div>
-        <input type="submit" value="Entrar"/>
-    </div>
-</form>
+
+
+        <div class="grid-x grid-margin-x">
+
+								<div class="small-10 large-4 small-offset-1 large-offset-4 cell">
+									<div class="callout">
+
+										Usuario<input type="text" id="middle-label" placeholder="Usuario" >
+
+										Senha<input type="password" id="middle-label" placeholder="Senha">
+
+
+										    <p><button type="submit" class="success button">Entrar</button>
+										    <button type="submit" class="alert button">Cancelar</a>
+
+
+                                    </div>
+
+                                </div>
+        </div>
+   </form>
 
 {% endblock %}
