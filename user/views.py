@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login
 
 
@@ -20,7 +20,7 @@ def login_POST(request):
     auth = authenticate(username=login_data[0], password=login_data[1])
     if auth:
         login(request, auth)
-        return render(request, 'login.html')
+        return redirect('index')
     else:
         data = {'auth_error': True}
         return render(request, 'login.html', data)
