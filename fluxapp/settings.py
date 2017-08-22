@@ -70,17 +70,17 @@ WSGI_APPLICATION = 'fluxapp.wsgi.application'
 # db_from_env = dj_database_url.config(conn_max_age=500)
 # DATABASES['default'].update(db_from_env)
 
-if str(os.environ['TEST']) == 'True':
-    DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.sqlite3',
-            'NAME': 'test_db',
-        }
+# if str(os.environ['TEST']) == 'True':
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': 'test_db',
     }
-else:
-    DATABASES = {
-        'default': dj_database_url.config(default=os.environ['DATABASE_URL'])
-    }
+}
+# else:
+#     DATABASES = {
+#         'default': dj_database_url.config(default=os.environ['DATABASE_URL'])
+#     }
 
 # Password validation
 # https://docs.djangoproject.com/en/1.9/ref/settings/#auth-password-validators
