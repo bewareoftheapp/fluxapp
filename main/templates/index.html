@@ -3,12 +3,30 @@
 {% load staticfiles %}
 
 {% block content %}
-    <div>
-        {{ user.username }}
-        <ul>
-            <li><a href="{% url 'new_budget' %}">Novo pedido de verba</a></li>
-            <li><a href="{% url 'new_reimburse' %}">Novo pedido de reembolso</a></li>
-            <li><a href="{% url 'logout' %}">sair</a></li>
-        </ul>
+
+
+<div class="grid-container">
+    <div class="grid-x grid-margin-x">
+        <div class="medium-6 columns">
+            Nome: {{ user.first_name }} {{ user.last_name }}</br>
+            Usuario: {{ user.username }}</br>
+            Email: {{ user.email }}</br>
+            Tipo: Administrador</br>
+            <a href="{% url 'logout' %}">sair</a>
+
+        </div>
+        <div class="medium-6 columns">
+            <ul>
+                <li><a>Incluir Usuario</a></li>
+                <li><a >Revisar Reembolso</a></li>
+                <li><a>Revisar Carteiras</a></li>
+                <li><a>Revisar Verbas</a></li>
+                <li><a>Incluir Usuario</a></li>
+                <li><a href="{% url 'new_budget' %}">Novo pedido de verba</a></li>
+                <li><a href="{% url 'new_reimburse' %}">Novo pedido de reembolso</a></li>
+
+            </ul>
+        </div>
     </div>
+</div>
 {% endblock %}
