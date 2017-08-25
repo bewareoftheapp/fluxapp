@@ -2,8 +2,12 @@
 
 {% block content %}
 
-<form method="POST" action="{% url 'new_reimburse' %}">
-
-</form>
+    <div>
+        <form action="{% url 'new_reimburse' %}" method="POST">
+            {% csrf_token %}
+            {{ reimburse_form }}
+            <button class="success button">Entrar</button>
+        </form>
+    </div>
 
 {% endblock %}

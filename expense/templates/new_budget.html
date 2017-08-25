@@ -4,7 +4,9 @@
 
     <div>
         <form action="{% url 'new_budget' %}" method="POST">
+            {% csrf_token %}
             {{ budget_form }}
+            <button class="success button">Entrar</button>
         </form>
     </div>
 
