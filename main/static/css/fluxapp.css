@@ -3,6 +3,6 @@
     top: 4em;
 }
 
-ul {
-    list-style-type: none;
+ul.index-menu {
+    border-left: 1px solid gray;
 }
