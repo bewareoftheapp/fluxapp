@@ -1,3 +1,8 @@
-ul {
-    list-style-type: none;
+.login-box {
+    position: relative;
+    top: 4em;
+}
+
+ul.index-menu {
+    border-left: 1px solid gray;
 }

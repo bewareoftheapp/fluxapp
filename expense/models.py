@@ -1,17 +1,36 @@
+from django.contrib.auth.models import User
 from django.db import models
 
-from user.models import User
+
+class Request(models.Model):
+
+    requester = models.ForeignKey(User, null=False, on_delete=models.CASCADE)
 
 
-class Budget(models.Model):
+class Budget(Request):
 
-    requester = models.ForeignKey(User)
-    value = models.FloatField()
-    description = models.TextField()
+    value = models.FloatField(null=False)
+    description = models.TextField(null=True)
 
 
-class Reimburse(models.Model):
+class Reimburse(Request):
 
-    requester = models.ForeignKey(User)
-    value = models.ForeignKey(Budget)
-    description = models.TextField()
+    value = models.FloatField(null=False)
+    description = models.TextField(null=True)
+
+
+class Approval(models.Model):
+
+    approver = models.ForeignKey(User, on_delete=models.CASCADE)
+    status = models.BooleanField(null=False)
+    timestamp = models.DateTimeField(auto_now=True, null=False)
+    message = models.CharField(max_length=350, null=True)
+    request = models.ForeignKey(Request, null=False, on_delete=models.CASCADE)
+
+
+class Commentary(models.Model):
+
+    request = models.ForeignKey(Request, null=False)
+    timestamp = models.DateTimeField(auto_now=True, null=False)
+    author = models.ForeignKey(User, null=False, on_delete=models.CASCADE)
+    text = models.TextField(null=False)

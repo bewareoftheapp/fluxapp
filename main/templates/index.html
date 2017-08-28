@@ -8,23 +8,60 @@
 <div class="grid-container">
     <div class="grid-x grid-margin-x">
         <div class="medium-6 columns">
-            Nome: {{ user.first_name }} {{ user.last_name }}</br>
-            Usuario: {{ user.username }}</br>
-            Email: {{ user.email }}</br>
-            Tipo: Administrador</br>
-            <a href="{% url 'logout' %}">sair</a>
-
+            {% if user.first_name %}
+            <div>{{ user.first_name }} {{ user.last_name }}</div>
+            {% endif %}
+            <div>{{ user.username }}</div>
+            <div>{{ user.email }}</div>
+            {% if user.is_staff %}
+            <div>Administrador</div>
+            {% endif %}
+            <div><a href="{% url 'logout' %}">sair</a></div>
         </div>
         <div class="medium-6 columns">
-            <ul>
-                <li><a>Incluir Usuario</a></li>
-                <li><a >Revisar Reembolso</a></li>
-                <li><a>Revisar Carteiras</a></li>
-                <li><a>Revisar Verbas</a></li>
-                <li><a>Incluir Usuario</a></li>
+            <ul class="vertical menu index-menu">
+                <li class="menu-text">Menu</li>
+                <li>
+                    <a href="#!">
+                        Meus pedidos de verba
+                        {% if my_pending_budget_count > 0 %}
+                        <span class="label">{{ my_pending_budget_count }}</span>
+                        {% endif %}
+                    </a>
+                </li>
                 <li><a href="{% url 'new_budget' %}">Novo pedido de verba</a></li>
-                <li><a href="{% url 'new_reimburse' %}">Novo pedido de reembolso</a></li>
-
+                <li>
+                    <a href="#!">
+                        Meus pedidos de Reembolso
+                        {% if my_pending_reimburse_count > 0 %}
+                        <span class="label">{{ my_pending_reimburse_count }}</span>
+                        {% endif %}
+                    </a>
+                </li>
+                <li><a href="{% url 'new_reimburse' %}">Novo pedido de Reembolso</a></li>
+                {% if user.is_staff %}
+                <li class="menu-text">Administração</li>
+                <li>
+                    <a href="#!">
+                        Pedidos de verba em aberto
+                        {% if pending_budget_count > 0 %}
+                        <span class="label">{{ pending_budget_count }}</span>
+                        {% endif %}
+                    </a>
+                </li>
+                <li>
+                    <a href="#!">
+                        Pedidos de reembolso em aberto
+                        {% if pending_reimburse_count > 0 %}
+                        <span class="label">{{ pending_reimburse_count }}</span>
+                        {% endif %}
+                    </a>
+                </li>
+                <li><a href="#!">Revisar carteira de grupos</a></li>
+                <li><a href="#!">Gerar relatórios</a></li>
+                <li><a href="#!">Gerenciar usuários</a></li>
+                <li><a href="#!">Gerenciar grupos</a></li>
+                {% endif %}
             </ul>
         </div>
     </div>
