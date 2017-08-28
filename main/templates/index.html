@@ -8,11 +8,13 @@
 <div class="grid-container">
     <div class="grid-x grid-margin-x">
         <div class="medium-6 columns">
-            <div>Nome: {{ user.first_name }} {{ user.last_name }}</div>
-            <div>Usuario: {{ user.username }}</div>
-            <div>Email: {{ user.email }}</div>
+            {% if user.first_name %}
+            <div>{{ user.first_name }} {{ user.last_name }}</div>
+            {% endif %}
+            <div>{{ user.username }}</div>
+            <div>{{ user.email }}</div>
             {% if user.is_staff %}
-            <div>Tipo: Administrador</div>
+            <div>Administrador</div>
             {% endif %}
             <div><a href="{% url 'logout' %}">sair</a></div>
         </div>
