@@ -16,5 +16,5 @@ urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
     url(r'^login/', user.views.login_page, name='login'),
     url(r'^logout/', user.views.logout_user, name='logout'),
-    url(r'carteira/', include(expense.urls))
+    url(r'financeiro/', include(expense.urls))
 ]

@@ -1,4 +1,5 @@
 from . import forms
+from . import models
 
 
 from django.shortcuts import render, redirect
@@ -30,3 +31,25 @@ def new_reimburse(request):
         result = redirect('index')
 
     return result
+
+
+def list_request(request):
+    pass
+
+
+def list_budgets(request):
+    budgets = models.Budget.objects.filter(requester=request.user)
+    data = {
+        'title': 'Meus pedidos de verba',
+        'requests': models.get_as_request_data(budgets)
+    }
+    return render(request, 'request_list.html', data)
+
+
+def list_reimburses(request):
+    reimburses = models.Reimburse.objects.filter(requester=request.user)
+    data = {
+        'title': 'Meus pedidos de reembolso',
+        'requests': models.get_as_request_data(reimburses)
+    }
+    return render(request, 'request_list.html', data)

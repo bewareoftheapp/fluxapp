@@ -2,9 +2,14 @@ from django.contrib.auth.models import User
 from django.db import models
 
 
+def get_as_request_data(requests):
+    return [RequestData(x) for x in requests]
+
+
 class Request(models.Model):
 
     requester = models.ForeignKey(User, null=False, on_delete=models.CASCADE)
+    timestamp = models.DateTimeField(auto_now=True, null=False)
 
 
 class Budget(Request):
@@ -34,3 +39,24 @@ class Commentary(models.Model):
     timestamp = models.DateTimeField(auto_now=True, null=False)
     author = models.ForeignKey(User, null=False, on_delete=models.CASCADE)
     text = models.TextField(null=False)
+
+
+class RequestData:
+
+    def __init__(self, request):
+        if issubclass(type(request), Budget):
+            self.request_type = 'budget'
+        elif issubclass(type(request), Reimburse):
+            self.request_type = 'reimburse'
+        else:
+            raise TypeError("RequestData: not a Budget nor a Reimburse.")
+
+        self.requester = request.requester
+        self.timestamp = request.timestamp
+        self.value = request.value
+        self.description = request.description
+
+        try:
+            self.approval = request.approval_set.latest('timestamp')
+        except Approval.DoesNotExist:
+            self.approval = None
