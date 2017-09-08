@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="grid-container">
+    <h3>{{ title }}</h3>
+    <table>
+        <tr>
+            <th>Descrição</th>
+            <th>Aprovação</th>
+            <th>Valor (R$)</th>
+        </tr>
+        {% for request in requests %}
+        <tr>
+            <td>{{ request.description }}</td>
+            <td>
+            {% if request.approval != None %}
+                {% if request.approval.state %}
+                Aprovado
+                {% else %}
+                Negado
+                {% endif %}
+            {% else %}
+                Pendente
+            {% endif %}
+            </td>
+            <td>R$ {{ request.value|floatformat:2 }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+
+</div>
+
+{% endblock %}
