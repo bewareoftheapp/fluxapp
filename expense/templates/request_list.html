@@ -12,7 +12,7 @@
         </tr>
         {% for request in requests %}
         <tr>
-            <td>{{ request.description }}</td>
+            <td><a href="{% url 'show_request' request.id %}">{{ request.description }}</a></td>
             <td>
             {% if request.approval != None %}
                 {% if request.approval.state %}

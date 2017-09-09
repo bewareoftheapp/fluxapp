@@ -42,7 +42,7 @@
                 {% if user.is_staff %}
                 <li class="menu-text">Administração</li>
                 <li>
-                    <a href="#!">
+                    <a href="{% url 'list_budget_approvals' %}">
                         Pedidos de verba em aberto
                         {% if pending_budget_count > 0 %}
                         <span class="label">{{ pending_budget_count }}</span>
@@ -50,7 +50,7 @@
                     </a>
                 </li>
                 <li>
-                    <a href="#!">
+                    <a href="{% url 'list_reimburse_approvals' %}">
                         Pedidos de reembolso em aberto
                         {% if pending_reimburse_count > 0 %}
                         <span class="label">{{ pending_reimburse_count }}</span>
