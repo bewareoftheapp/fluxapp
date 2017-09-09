@@ -55,9 +55,9 @@ class RequestData:
 
     def __init__(self, request):
         if issubclass(type(request), Budget):
-            self.request_type = 'budget'
+            self.type = 'Verba'
         elif issubclass(type(request), Reimburse):
-            self.request_type = 'reimburse'
+            self.type = 'Reembolso'
         else:
             raise TypeError("RequestData: not a Budget nor a Reimburse.")
 
@@ -66,6 +66,7 @@ class RequestData:
         self.timestamp = request.timestamp
         self.value = request.value
         self.description = request.description
+        self.approval_set = request.approval_set.all().order_by('-timestamp')
 
         try:
             self.approval = request.approval_set.latest('timestamp')

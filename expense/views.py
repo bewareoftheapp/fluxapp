@@ -84,6 +84,28 @@ def list_reimburse_approvals(request):
     return render(request, 'approval_list.html', data)
 
 
+def get_request(request_id):
+    '''Get a request and resolve it to budget or reimburse.'''
+    req = models.Request.objects.get(id=request_id)
+    try:
+        return req.reimburse
+    except ImportError:
+        return req.budget
+
+
 def show_request(request, request_id):
     '''Show request page.'''
-    pass
+    req = models.RequestData(get_request(request_id))
+    data = {
+        'request': req,
+        'user': request.user
+    }
+    return render(request, 'request.html', data)
+
+
+def set_approval(request, request_id, approval):
+    '''Set approval for request.'''
+    req = get_request(request_id)
+    approval_status = approval == 'aprovar'
+    req.approval_set.create(approver=request.user, status=approval_status)
+    return redirect('show_request', request_id=request_id)

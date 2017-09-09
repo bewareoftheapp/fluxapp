@@ -15,7 +15,7 @@
             <td><a href="{% url 'show_request' request.id %}">{{ request.description }}</a></td>
             <td>
             {% if request.approval != None %}
-                {% if request.approval.state %}
+                {% if request.approval %}
                 Aprovado
                 {% else %}
                 Negado
