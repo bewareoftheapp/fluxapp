@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="grid-container">
+    <h3>{{ title }}</h3>
+    {% for section in sections %}
+    <h4>{{ section.title }}</h4>
+    <table>
+        <tr>
+            <th>Quem</th>
+            <th>Descrição</th>
+            <th>Valor</th>
+        </tr>
+        {% for request in section.requests %}
+        <tr>
+            <td>{{ request.requester }}</td>
+            <td><a href="{% url 'show_request' request.id%}">{{ request.description }}</a></td>
+            <td>R$ {{ request.value|floatformat:2 }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+    {% endfor %}
+</div>
+
+{% endblock %}

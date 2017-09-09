@@ -1,11 +1,13 @@
-from . import forms
-from . import models
+'''Expense views implementation.'''
 
 
-from django.shortcuts import render, redirect
+from django.shortcuts import redirect, render
+
+from . import forms, models
 
 
 def new_budget(request):
+    '''Create new budget.'''
     if request.method == "GET":
         data = {'budget_form': forms.BudgetForm()}
         result = render(request, 'new_budget.html', data)
@@ -20,6 +22,7 @@ def new_budget(request):
 
 
 def new_reimburse(request):
+    '''Create new reimburse.'''
     if request.method == "GET":
         data = {'reimburse_form': forms.ReimburseForm}
         result = render(request, 'new_reimburse.html', data)
@@ -34,10 +37,12 @@ def new_reimburse(request):
 
 
 def list_request(request):
+    '''List all requests.'''
     pass
 
 
 def list_budgets(request):
+    '''List all budgets from active user.'''
     budgets = models.Budget.objects.filter(requester=request.user)
     data = {
         'title': 'Meus pedidos de verba',
@@ -47,9 +52,60 @@ def list_budgets(request):
 
 
 def list_reimburses(request):
+    '''List all reimburses from active user.'''
     reimburses = models.Reimburse.objects.filter(requester=request.user)
     data = {
         'title': 'Meus pedidos de reembolso',
         'requests': models.get_as_request_data(reimburses)
     }
     return render(request, 'request_list.html', data)
+
+
+def list_approvals(request):
+    '''List all approvals.'''
+    pass
+
+
+def list_budget_approvals(request):
+    '''List budget approvals.'''
+    pass
+
+
+def list_reimburse_approvals(request):
+    '''List reimburse approvals.'''
+    reimburses = models.Reimburse.objects.filter(approval=None)
+    data = {
+        'title': 'Aprovações de reembolso',
+        'sections':[{
+            'title': 'Pendentes',
+            'requests': models.get_as_request_data(reimburses)
+        }]
+    }
+    return render(request, 'approval_list.html', data)
+
+
+def get_request(request_id):
+    '''Get a request and resolve it to budget or reimburse.'''
+    req = models.Request.objects.get(id=request_id)
+    try:
+        return req.reimburse
+    except ImportError:
+        return req.budget
+
+
+def show_request(request, request_id):
+    '''Show request page.'''
+    req = models.RequestData(get_request(request_id))
+    data = {
+        'request': req,
+        'user': request.user
+    }
+    return render(request, 'request.html', data)
+
+
+def set_approval(request, request_id, approval):
+    '''Set approval for request.'''
+    req = get_request(request_id)
+    approval_status = approval == 'aprovar'
+    req.approval_set.create(approver=request.user, status=approval_status)
+    return redirect('show_request', request_id=request_id)
