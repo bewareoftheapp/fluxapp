@@ -36,11 +36,6 @@ def new_reimburse(request):
     return result
 
 
-def list_request(request):
-    '''List all requests.'''
-    pass
-
-
 def list_budgets(request):
     '''List all budgets from active user.'''
     budgets = models.Budget.objects.filter(requester=request.user)
@@ -61,14 +56,17 @@ def list_reimburses(request):
     return render(request, 'request_list.html', data)
 
 
-def list_approvals(request):
-    '''List all approvals.'''
-    pass
-
-
 def list_budget_approvals(request):
     '''List budget approvals.'''
-    pass
+    budgets = models.Budget.objects.filter(approval=None)
+    data = {
+        'title': 'Aprovações de verba',
+        'sections':[{
+            'title': 'Pendentes',
+            'requests': models.get_as_request_data(budgets)
+        }]
+    }
+    return render(request, 'approval_list.html', data)
 
 
 def list_reimburse_approvals(request):
@@ -89,7 +87,7 @@ def get_request(request_id):
     req = models.Request.objects.get(id=request_id)
     try:
         return req.reimburse
-    except ImportError:
+    except models.Reimburse.DoesNotExist:
         return req.budget
 
 
