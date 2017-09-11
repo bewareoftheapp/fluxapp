@@ -2,25 +2,25 @@
 
 {% block content %}
 
-<div class="grid-container">
+<article class="grid-container">
     <h3>Requisição #{{ request.id }}: {{ request.type }}</h3>
-    <div class="callout">
+    <header class="callout">
         <div>Requerente: {{ request.requester.first_name }} {{ request.requester.last_name }}</div>
         <div>Valor: R$ {{ request.value|floatformat:2 }}</div>
         <div>
             <div>Descrição:</div>
             <div>{{ request.description }}</div>
         </div>
-    </div>
-    <div class="callout grid-y grid-padding-y">
+    </header>
+    <section class="callout grid-y grid-padding-y">
         <h4>
             Aprovação
             {% if request.approval == None %}
-            <span class="warning label">Pendente</span>
+            <output class="warning label">Pendente</output>
             {% elif request.approval %}
-            <span class="success label">Aprovado</span>
+            <output class="success label">Aprovado</output>
             {% else %}
-            <span class="alert label">Negado</span>
+            <output class="alert label">Negado</output>
             {% endif %}
         </h4>
         {% if user.is_staff %}
@@ -37,13 +37,15 @@
         {% for approval in request.approval_set %}
         <div class="small-12 cell">
             <div><strong>Aprovação #{{ approval.id }}</strong></div>
-            <div>
-                <span class="float-left">{{ approval.approver.first_name }} {{ approval.approver.last_name }}</span>
-                {% if approval.status %}
-                <span class="float-right success label">APROVADO</span>
-                {% else %}
-                <span class="float-right alert label">NEGADO</span>
-                {% endif %}
+            <div class="grid-x">
+                <div class="small-9 cell">{{ approval.approver.first_name }} {{ approval.approver.last_name }}</div>
+                <div class="small-3 cell">
+                    {% if approval.status %}
+                    <span class="float-right success label">APROVADO</span>
+                    {% else %}
+                    <span class="float-right alert label">NEGADO</span>
+                    {% endif %}
+                </div>
             </div>
 
             {% if approval.message %}
@@ -52,7 +54,24 @@
         </div>
         {% endfor %}
         {% endif %}
-    </div>
-</div>
+    </section>
+    <section class="callout grid-y grid-padding-y">
+        <h4>Discussão</h4>
+        {% for commentary in request.commentary_set %}
+        <div class="small-12 cell">
+            <div><strong>{{ commentary.author.first_name }} {{ commentary.author.last_name }}</strong></div>
+            <div>{{ commentary.text }}</div>
+        </div>
+        {% endfor %}
+        <form action="{% url 'show_request' request.id %}" method="POST">
+            {% csrf_token %}
+            <label>
+                <strong>{{ user.first_name }}</strong>, deixe seu comentário:
+                <textarea name="text" rows="4" required></textarea>
+            </label>
+            <button class="success button float-right">Enviar</button>
+        </form>
+    </section>
+</article>
 
 {% endblock %}
