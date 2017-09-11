@@ -1,7 +1,7 @@
 '''Expense views implementation.'''
 
 
-from django.shortcuts import redirect, render
+from django.shortcuts import redirect, render, get_object_or_404
 
 from . import forms, models
 
@@ -36,11 +36,6 @@ def new_reimburse(request):
     return result
 
 
-def list_request(request):
-    '''List all requests.'''
-    pass
-
-
 def list_budgets(request):
     '''List all budgets from active user.'''
     budgets = models.Budget.objects.filter(requester=request.user)
@@ -61,14 +56,17 @@ def list_reimburses(request):
     return render(request, 'request_list.html', data)
 
 
-def list_approvals(request):
-    '''List all approvals.'''
-    pass
-
-
 def list_budget_approvals(request):
     '''List budget approvals.'''
-    pass
+    budgets = models.Budget.objects.filter(approval=None)
+    data = {
+        'title': 'Aprovações de verba',
+        'sections':[{
+            'title': 'Pendentes',
+            'requests': models.get_as_request_data(budgets)
+        }]
+    }
+    return render(request, 'approval_list.html', data)
 
 
 def list_reimburse_approvals(request):
@@ -84,28 +82,32 @@ def list_reimburse_approvals(request):
     return render(request, 'approval_list.html', data)
 
 
-def get_request(request_id):
+def get_request_or_404(request_id):
     '''Get a request and resolve it to budget or reimburse.'''
-    req = models.Request.objects.get(id=request_id)
+    req = get_object_or_404(models.Request, pk=request_id)
     try:
         return req.reimburse
-    except ImportError:
+    except models.Reimburse.DoesNotExist:
         return req.budget
 
 
 def show_request(request, request_id):
     '''Show request page.'''
-    req = models.RequestData(get_request(request_id))
+    req = get_request_or_404(request_id)
     data = {
-        'request': req,
+        'request': models.RequestData(req),
         'user': request.user
     }
+
+    if request.method == "POST" and request.POST['text']:
+        req.commentary_set.create(author=request.user, text=request.POST['text'])
+
     return render(request, 'request.html', data)
 
 
 def set_approval(request, request_id, approval):
     '''Set approval for request.'''
-    req = get_request(request_id)
+    req = get_object_or_404(models.Request, pk=request_id)
     approval_status = approval == 'aprovar'
     req.approval_set.create(approver=request.user, status=approval_status)
     return redirect('show_request', request_id=request_id)

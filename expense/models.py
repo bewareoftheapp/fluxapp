@@ -50,7 +50,7 @@ class Commentary(models.Model):
     text = models.TextField(null=False)
 
 
-class RequestData:
+class RequestData(object):
     '''Collects request data to be rendered.'''
 
     def __init__(self, request):
@@ -67,6 +67,7 @@ class RequestData:
         self.value = request.value
         self.description = request.description
         self.approval_set = request.approval_set.all().order_by('-timestamp')
+        self.commentary_set = request.commentary_set.all().order_by('timestamp')
 
         try:
             self.approval = request.approval_set.latest('timestamp')

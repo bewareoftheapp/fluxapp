@@ -6,3 +6,7 @@
 ul.index-menu {
     border-left: 1px solid gray;
 }
+
+form textarea{
+    resize: vertical;
+}
