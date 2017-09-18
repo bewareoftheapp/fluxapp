@@ -10,11 +10,19 @@ def get_as_request_data(requests):
     return [RequestData(x) for x in requests]
 
 
+def truncate_long_string(text):
+    '''Truncate long string or return full short strings.'''
+    return text if len(text) < 15 else text[0:12] + "..."
+
+
 class Request(models.Model):
     '''Represent a generic request in the app.'''
 
     requester = models.ForeignKey(User, null=False, on_delete=models.CASCADE)
     timestamp = models.DateTimeField(auto_now=True, null=False)
+
+    def __str__(self):
+        return str(self.requester)
 
 
 class Budget(Request):
@@ -23,12 +31,18 @@ class Budget(Request):
     value = models.FloatField(null=False)
     description = models.TextField(null=True)
 
+    def __str__(self):
+        return truncate_long_string(str(self.description))
+
 
 class Reimburse(Request):
     '''Represent a reimburse request.'''
 
     value = models.FloatField(null=False)
     description = models.TextField(null=True)
+
+    def __str__(self):
+        return truncate_long_string(str(self.description))
 
 
 class Approval(models.Model):
@@ -40,6 +54,9 @@ class Approval(models.Model):
     message = models.CharField(max_length=350, null=True)
     request = models.ForeignKey(Request, null=False, on_delete=models.CASCADE)
 
+    def __str__(self):
+        return "approved" if self.status else "denied"
+
 
 class Commentary(models.Model):
     '''Represent a request commentary.'''
@@ -48,6 +65,9 @@ class Commentary(models.Model):
     timestamp = models.DateTimeField(auto_now=True, null=False)
     author = models.ForeignKey(User, null=False, on_delete=models.CASCADE)
     text = models.TextField(null=False)
+
+    def __str__(self):
+        return truncate_long_string(str(self.text))
 
 
 class RequestData(object):
