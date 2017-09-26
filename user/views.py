@@ -132,3 +132,20 @@ def register_user(request):
     else:
         response = render(request, 'register_user.html')
     return response
+
+
+def active_tokens(request):
+    '''Respond active tokens.
+
+    If token is active then the invitation is pending.'''
+    data = {
+        'active_tokens': models.RegistrationToken.objects.filter(active=True)
+    }
+    return render(request, 'active_tokens.html', data)
+
+
+def staff_users(request):
+    '''Manage staff users.
+
+    Add or remove user's staff credential.'''
+    pass
