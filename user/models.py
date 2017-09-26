@@ -6,6 +6,7 @@ import random
 import string
 
 from django.contrib.auth.models import User as UserModel
+from django.core.urlresolvers import reverse
 from django.db import models
 
 
@@ -35,3 +36,7 @@ class RegistrationToken(models.Model):
     token = models.CharField(null=False, max_length=40, default=_generate_token)
     email = models.EmailField(null=False)
     active = models.BooleanField(null=False, default=True)
+
+    def url(self):
+        '''Generate user registration URL.'''
+        return reverse('register_user') + "?token={0}".format(self.token)
