@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="grid-container">
+    <article class="grid-y">
+        <header class="small-12 cell">
+            <h3>Novo usuário</h3>
+        </header>
+        <section class="small-12 cell">
+            <p>Agora o novo usuário deve concluir o cadastro através do link abaixo. Envie este link pra ele!</p>
+        </section>
+        <section class="small-12 cell callout">
+            {{ host }}{{ registration_token.url }}
+        </section>
+        <section class="small-12 cell text-center">
+            <a href="{% url 'index' %}" class="button">Voltar ao menu principal</a>
+        </section>
+    </article>
+</div>
+
+{% endblock %}

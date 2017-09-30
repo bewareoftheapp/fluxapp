@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="grid-container">
+    <article class="grid-y grid-padding-y">
+        <header class="small-12 cell"><h3>Convites pendentes</h3></header>
+    </article>
+    {% if active_tokens %}
+    <section class="small-12 cell">
+        <p>Envie o endereço do convite para o usuário para que ele possa se registrar!</p>
+    </section>
+    <section class="small-12 cell">
+        <table>
+            <tr>
+                <th>E-mail</th>
+                <th>Endereço do convite</th>
+            </tr>
+            {% for token in active_tokens %}
+            <tr>
+                <td>{{ token.email }}</td>
+                <td>{{ token.url }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+    </section>
+    {% else %}
+    <section class="small-12 cell">
+        <p>Nenhum convite pendente!</p>
+    </section>
+    {% endif %}
+</div>
+
+{% endblock %}

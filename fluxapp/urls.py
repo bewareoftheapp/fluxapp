@@ -1,9 +1,14 @@
-import main.views
-import expense.urls
+'''Register fluxapp urls routes.'''
+
+import user.urls
 import user.views
 
 from django.conf.urls import include, url
 from django.contrib import admin
+
+import expense.urls
+import main.views
+
 admin.autodiscover()
 
 
@@ -16,5 +21,6 @@ urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
     url(r'^login/', user.views.login_page, name='login'),
     url(r'^logout/', user.views.logout_user, name='logout'),
-    url(r'financeiro/', include(expense.urls))
+    url(r'^financeiro/', include(expense.urls)),
+    url(r'^usuario/', include(user.urls)),
 ]

@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="grid-container">
+    <article class="grid-y grid-padding-y">
+        <header class="small-12 cell"><h3>Criação de usuário</h3></header>
+
+        {% if registration_token %}
+
+        <section class="small-12 cell">
+            <p>Nos diga qual o e-mail que você informou para se registrar no sistema.</p>
+            <form method="POST" action="{% url 'register_user' %}">
+                {% csrf_token %}
+                <input type="hidden" name="token" value="{{ registration_token.token }}" />
+                <label>E-mail
+                    {% if email_error %}
+                    <ul class="errorlist">
+                        <li>Oops, parece que esse e-mail não é o mesmo informado no convite. :(</li>
+                    </ul>
+                    {% endif %}
+                    <input type="text" name="email" required />
+                </label>
+                <button class="success button float-right">Confirmar</button>
+            </form>
+        </section>
+
+        {% elif user_form %}
+
+        <section class="small-12 cell">
+            <form method="POST" action="{% url 'register_user' %}">
+                {% csrf_token %}
+                <input type="hidden" name="user_token" value="{{ user_token }}" />
+                {{ user_form }}
+                <button class="success button float-right">Confirmar</button>
+            </form>
+        </section>
+
+        {% elif new_user %}
+
+        <section class="small-12 cell">
+            <p>Usuário {{ new_user.username }} criado com sucesso!</p>
+        </section>
+        <section class="small-12 cell text-center">
+            <a href="{% url 'login' %}" class="button">Fazer login</a>
+        </section>
+
+        {% else %}
+
+        <section class="small-12 cell">
+            <p>Nossa, que estranho. Não consigo entender o porque você veio parar nesta página. :S</p>
+        </section>
+
+        {% endif %}
+    </article>
+</div>
+
+{% endblock %}

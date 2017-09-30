@@ -4,8 +4,9 @@ from django.forms import ModelForm
 
 
 class BudgetForm(ModelForm):
+    '''Form for expense.models.Budget model.'''
 
-    class Meta:
+    class Meta:  # pylint: disable=missing-docstring
         model = Budget
         fields = [
             'value',
@@ -14,8 +15,9 @@ class BudgetForm(ModelForm):
 
 
 class ReimburseForm(ModelForm):
+    '''Form for expense.models.Reimburse model.'''
 
-    class Meta:
+    class Meta:  # pylint: disable=missing-docstring
         model = Reimburse
         fields = [
             'value',

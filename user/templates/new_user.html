@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="grid-container">
+    <article class="grid-y">
+        <header class="small-12 cell">
+            <h3>Novo usuário</h3>
+        </header>
+        <section class="small-12 cell">
+            <p>Informe o e-mail do usuário que você deseja adicionar e criaremos uma conta para ele.</p>
+        </section>
+        <form class="small-12 cell" method="POST" action="{% url 'new_user' %}">
+            {% csrf_token %}
+            {{ registration_form }}
+            <button class="success button float-right">Adicionar usuário</button>
+        </form>
+    </article>
+</div>
+
+{% endblock %}

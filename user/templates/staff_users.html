@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="grid-container">
+    <article class="grid-y grid-padding-y">
+        <header class="small-12 cell"><h3>Administradores</h3></header>
+    </article>
+    <section class="small-12 cell">
+        <p>Aqui você pode tornar um usuário administrador ou remover o poder de administração de alguém. Cuidado!</p>
+    </section>
+    <section class="small-12 cell">
+        <header><strong>Usuários administradores</strong></header>
+        <form action="{% url 'staff_users' %}" method="post">
+            {% csrf_token %}
+            <ul class="no-bullet">
+                {% for user in staff_users %}
+                <li>
+                    <label>
+                        <input type="checkbox" name="remove_{{ user.id }}" value="false" />
+                        {{ user.first_name }} {{ user.last_name }}
+                    </label>
+                </li>
+                {% endfor %}
+            </ul>
+            <button class="success button float-right">Remover poder de administrador</button>
+        </form>
+    </section>
+    <section class="small-12 cell">
+        <header><strong>Usuários comuns</strong></header>
+        <form action="{% url 'staff_users' %}" method="post">
+            {% csrf_token %}
+            <ul class="no-bullet">
+                {% for user in non_staff_users %}
+                <li>
+                    <label>
+                        <input type="checkbox" name="add_{{ user.id }}" value="false" />
+                        {{ user.first_name }} {{ user.last_name }}
+                    </label>
+                </li>
+                {% endfor %}
+            </ul>
+            <button class="success button float-right">Conceder poder de administrador</button>
+        </form>
+    </section>
+</div>
+
+{% endblock %}

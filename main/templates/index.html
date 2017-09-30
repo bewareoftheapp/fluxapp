@@ -59,8 +59,10 @@
                 </li>
                 <li><a href="#!">Revisar carteira de grupos</a></li>
                 <li><a href="#!">Gerar relatórios</a></li>
-                <li><a href="#!">Gerenciar usuários</a></li>
-                <li><a href="#!">Gerenciar grupos</a></li>
+                <li class="menu-text">Usuários</li>
+                <li><a href="{% url 'new_user' %}">Novo usuário</a></li>
+                <li><a href="{% url 'active_tokens' %}">Convites pendentes</a></li>
+                <li><a href="{% url 'staff_users' %}">Administradores</a></li>
                 {% endif %}
             </ul>
         </div>
