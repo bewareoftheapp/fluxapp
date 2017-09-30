@@ -9,6 +9,7 @@ from . import views
 urlpatterns = [
     url(r'^nova-verba/', views.new_budget, name='new_budget'),
     url(r'^novo-reembolso/', views.new_reimburse, name='new_reimburse'),
+    url(r'^reembolsos/todos/', views.list_all_reimburses, name='list_all_reimburses'),
     url(r'^verbas/', views.list_budgets, name='list_budgets'),
     url(r'^reembolsos/', views.list_reimburses, name='list_reimburses'),
     url(r'^aprovacoes/verba/', views.list_budget_approvals, name='list_budget_approvals'),

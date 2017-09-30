@@ -6,12 +6,18 @@
     <h3>{{ title }}</h3>
     <table>
         <tr>
+            {% if show_requester %}
+            <th>Pedido por</th>
+            {% endif %}
             <th>Descrição</th>
             <th>Aprovação</th>
             <th>Valor (R$)</th>
         </tr>
         {% for request in requests %}
         <tr>
+            {% if show_requester %}
+            <td>{{ request.requester.first_name }}</td>
+            {% endif %}
             <td><a href="{% url 'show_request' request.id %}">{{ request.description }}</a></td>
             <td>
             {% if request.approval != None %}
