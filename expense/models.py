@@ -90,6 +90,6 @@ class RequestData(object):
         self.commentary_set = request.commentary_set.all().order_by('timestamp')
 
         try:
-            self.approval = request.approval_set.latest('timestamp')
+            self.approval = request.approval_set.latest('timestamp').status
         except Approval.DoesNotExist:
             self.approval = None
