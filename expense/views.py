@@ -40,6 +40,7 @@ def list_budgets(request):
     '''List all budgets from active user.'''
     budgets = models.Budget.objects.filter(requester=request.user)
     data = {
+        'show_requester': False,
         'title': 'Meus pedidos de verba',
         'requests': models.get_as_request_data(budgets)
     }
@@ -50,7 +51,19 @@ def list_reimburses(request):
     '''List all reimburses from active user.'''
     reimburses = models.Reimburse.objects.filter(requester=request.user)
     data = {
+        'show_requester': False,
         'title': 'Meus pedidos de reembolso',
+        'requests': models.get_as_request_data(reimburses)
+    }
+    return render(request, 'request_list.html', data)
+
+
+def list_all_reimburses(request):
+    '''List all reimburses.'''
+    reimburses = models.Reimburse.objects.all()
+    data = {
+        'show_requester': True,
+        'title': 'Todos os pedidos de reembolso',
         'requests': models.get_as_request_data(reimburses)
     }
     return render(request, 'request_list.html', data)

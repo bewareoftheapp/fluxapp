@@ -61,7 +61,7 @@
                         {% endif %}
                     </a>
                 </li>
-                <li><a href="#!">Todos os pedidos de reembolso</a></li>
+                <li><a href="{% url 'list_all_reimburses' %}">Todos os pedidos de reembolso</a></li>
                 <li class="menu-text">Usuários</li>
                 <li><a href="{% url 'new_user' %}">Novo usuário</a></li>
                 <li><a href="{% url 'active_tokens' %}">Convites pendentes</a></li>
