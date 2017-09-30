@@ -21,6 +21,7 @@
         <div class="small-12 medium-6 cell">
             <ul class="vertical menu index-menu">
                 <li class="menu-text">Menu</li>
+                {% comment "hide budeget section" %}
                 <li>
                     <a href="{% url 'list_budgets' %}">
                         Meus pedidos de verba
@@ -30,6 +31,7 @@
                     </a>
                 </li>
                 <li><a href="{% url 'new_budget' %}">Novo pedido de verba</a></li>
+                {% endcomment %}
                 <li>
                     <a href="{% url 'list_reimburses' %}">
                         Meus pedidos de Reembolso
@@ -41,6 +43,7 @@
                 <li><a href="{% url 'new_reimburse' %}">Novo pedido de Reembolso</a></li>
                 {% if user.is_staff %}
                 <li class="menu-text">Administração</li>
+                {% comment "hide budget approval" %}
                 <li>
                     <a href="{% url 'list_budget_approvals' %}">
                         Pedidos de verba em aberto
@@ -49,6 +52,7 @@
                         {% endif %}
                     </a>
                 </li>
+                {% endcomment %}
                 <li>
                     <a href="{% url 'list_reimburse_approvals' %}">
                         Pedidos de reembolso em aberto
@@ -57,8 +61,7 @@
                         {% endif %}
                     </a>
                 </li>
-                <li><a href="#!">Revisar carteira de grupos</a></li>
-                <li><a href="#!">Gerar relatórios</a></li>
+                <li><a href="#!">Todos os pedidos de reembolso</a></li>
                 <li class="menu-text">Usuários</li>
                 <li><a href="{% url 'new_user' %}">Novo usuário</a></li>
                 <li><a href="{% url 'active_tokens' %}">Convites pendentes</a></li>
