@@ -27,10 +27,20 @@
         <div class="small-12 cell">
             <div><strong>Avaliar</strong></div>
             <span class="float-left">{{ user.first_name }} {{ user.last_name }}</span>
+            {% if request.approval == None %}
             <span class="float-right small button-group">
                 <a href="{% url 'set_approval' request.id 'aprovar' %}" class="success button">Aprovar</a>
                 <a href="{% url 'set_approval' request.id 'negar' %}" class="alert button">Negar</a>
             </span>
+            {% elif request.approval %}
+            <span class="float-right">
+                <a href="{% url 'set_approval' request.id 'negar' %}" class="small alert button">Negar</a>
+            </span>
+            {% else %}
+            <span class="float-right">
+                <a href="{% url 'set_approval' request.id 'aprovar' %}" class="small success button">Aprovar</a>
+            </span>
+            {% endif %}
         </div>
         {% endif %}
         {% if request.approval_set %}
