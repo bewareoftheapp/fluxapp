@@ -13,11 +13,25 @@
     <link rel="stylesheet" href="/static/css/fluxapp.css" />
 </head>
 <body>
+<!--
+<div class="grid-y grid-margin-y">
+    <div class="small-12 cell text-center">
+        <h1><a href="{% url 'index' %}">FluxApp</a></h1>
+    </div>
+</div>
+-->
 
-<div class="grid-x grid-margin-x">
-
-    <div class="large-4 small-4 small-offset-4 large-offset-5 cell"><h1>FluxApp</h1></div>
-
+<div class="top-bar">
+    <div class="top-bar-left">
+        <ul class="menu">
+            <li class="menu-text">FluxApp</li>
+        </ul>
+    </div>
+    <div class="top-bar-right">
+        <ul class="menu">
+            <li><a href="{% url 'index' %}">Início</a></li>
+        </ul>
+    </div>
 </div>
 
 
