@@ -12,6 +12,10 @@ class BudgetForm(ModelForm):
             'value',
             'description',
         ]
+        labels = {
+            'value': 'Valor',
+            'description': 'Descrição'
+        }
 
 
 class ReimburseForm(ModelForm):
@@ -23,3 +27,7 @@ class ReimburseForm(ModelForm):
             'value',
             'description',
         ]
+        labels = {
+            'value': 'Valor',
+            'description': 'Descrição'
+        }

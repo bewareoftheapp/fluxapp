@@ -2,13 +2,15 @@
 
 {% block content %}
 
-    <div>
-        <form action="{% url 'new_budget' %}" method="POST">
+<div class="grid-container">
+    <article class="grid-y grid-padding-y">
+        <header class="small-12 cell"><h3>Requisitar verba</h3></header>
+        <form action="{% url 'new_budget' %}" method="POST" class="small-12 cell">
             {% csrf_token %}
             {{ budget_form }}
-            <button class="success button">Entrar</button>
+            <button class="success button float-right">Confirmar</button>
         </form>
-    </div>
-
+    </article>
+</div>
 
 {% endblock %}
