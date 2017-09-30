@@ -144,8 +144,35 @@ def active_tokens(request):
     return render(request, 'active_tokens.html', data)
 
 
+def handle_staff_status(request, prefix, status):
+    user_ids = [key.split('_')[1]
+                for key in request.POST.keys()
+                if key.startswith(prefix + '_') and request.POST[key]]
+
+    if not user_ids:
+        return
+
+    users = User.objects.filter(id__in=user_ids)
+    for user in users:
+        user.is_staff = status
+        user.save()
+
+
 def staff_users(request):
     '''Manage staff users.
 
     Add or remove user's staff credential.'''
-    pass
+
+    if request.method == "GET":
+        users = User.objects.exclude(first_name__exact="")
+        data = {
+            'staff_users': users.filter(is_staff=True),
+            'non_staff_users': users.filter(is_staff=False)
+        }
+        response = render(request, 'staff_users.html', data)
+    else:
+        handle_staff_status(request, 'add', True)
+        handle_staff_status(request, 'remove', False)
+        response = redirect('staff_users')
+
+    return response
