@@ -139,6 +139,7 @@ def active_tokens(request):
 
     If token is active then the invitation is pending.'''
     data = {
+        'host': request.META['HTTP_HOST'],
         'active_tokens': models.RegistrationToken.objects.filter(active=True)
     }
     return render(request, 'active_tokens.html', data)

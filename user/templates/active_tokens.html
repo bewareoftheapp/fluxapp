@@ -19,7 +19,7 @@
             {% for token in active_tokens %}
             <tr>
                 <td>{{ token.email }}</td>
-                <td>{{ token.url }}</td>
+                <td>{{ host }}{{ token.url }}</td>
             </tr>
             {% endfor %}
         </table>
