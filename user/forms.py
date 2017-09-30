@@ -66,3 +66,6 @@ class UserForm(forms.ModelForm):
                 'required': 'Precisamos de senha para sua conta.'
             }
         }
+        help_texts = {
+            'username': None
+        }

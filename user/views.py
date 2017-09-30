@@ -94,7 +94,7 @@ def validate_token(request, registration_token):
 
     data = {}
     if registration_token.email == request.POST['email']:
-        data['user_form'] = forms.UserForm()
+        data['user_form'] = forms.UserForm(initial={'email': str(registration_token.email)})
         data['user_token'] = registration_token.token
     else:
         data['registration_token'] = registration_token
