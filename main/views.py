@@ -1,9 +1,12 @@
+from django.contrib.auth.decorators import login_required
+from django.shortcuts import redirect, render
+
 from expense.models import Budget, Reimburse
 
-from django.shortcuts import render, redirect
 
-
-def user_index(request):
+@login_required
+def index(request):
+    '''Render index page.'''
     budgets = Budget.objects.filter(approval=None)
     reimburse = Reimburse.objects.filter(approval=None)
     user = request.user
@@ -14,10 +17,3 @@ def user_index(request):
         data['pending_budget_count'] = budgets.count()
         data['pending_reimburse_count'] = reimburse.count()
     return render(request, 'index.html', data)
-
-def index(request):
-    if request.user.is_authenticated():
-        result = user_index(request)
-    else:
-        result = redirect('login')
-    return result
