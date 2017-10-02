@@ -1,8 +1,10 @@
 '''User views.'''
 
+from django.contrib.admin.views.decorators import staff_member_required
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
 from django.shortcuts import get_object_or_404, redirect, render
+from django.core.urlresolvers import reverse
 
 from . import forms, models
 
@@ -28,7 +30,8 @@ def login_POST(request):
     auth = authenticate(username=login_data[0], password=login_data[1])
     if auth:
         login(request, auth)
-        response = redirect('index')
+        nextPage = request.POST.get('next')
+        response = redirect(str(nextPage) if nextPage else 'index')
     else:
         data = {'auth_error': True}
         response = render(request, 'login.html', data)
@@ -53,6 +56,7 @@ def logout_user(request):
     return redirect('login')
 
 
+@staff_member_required(login_url='login')
 def new_user(request):
     '''Start the new user process generating a registration token.'''
     data = {'user': request.user}
@@ -79,6 +83,7 @@ def render_registration_token(request, registration_token):
     return render(request, 'registration_token.html', data)
 
 
+@staff_member_required(login_url='login')
 def get_registration_token(request, reg_token_id):
     '''Selects and render a user.models.RegistrationToken.'''
     registration_token = get_object_or_404(models.RegistrationToken, id=reg_token_id)
@@ -104,6 +109,14 @@ def validate_token(request, registration_token):
 
 def register_user(request):
     '''Register a new user to system.'''
+    if request.user.is_authenticated:
+        data = {
+            'err_msg': 'Para registrar um novo usuário você precisa sair de sua conta.',
+            'btn_msg': 'Sair',
+            'btn_href': reverse('logout')
+        }
+        return render(request, 'oops.html', data)
+
     data = {}
     if request.method == "GET" and request.GET.get('token'):
         registration_token = get_object_or_404(models.RegistrationToken, token=request.GET['token'])
@@ -134,6 +147,7 @@ def register_user(request):
     return response
 
 
+@staff_member_required(login_url='login')
 def active_tokens(request):
     '''Respond active tokens.
 
@@ -146,6 +160,7 @@ def active_tokens(request):
 
 
 def handle_staff_status(request, prefix, status):
+    '''Add/remove staff status of users.'''
     user_ids = [key.split('_')[1]
                 for key in request.POST.keys()
                 if key.startswith(prefix + '_') and request.POST[key]]
@@ -159,6 +174,7 @@ def handle_staff_status(request, prefix, status):
         user.save()
 
 
+@staff_member_required(login_url='login')
 def staff_users(request):
     '''Manage staff users.
 

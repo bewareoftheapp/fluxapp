@@ -1,11 +1,14 @@
 '''Expense views implementation.'''
 
 
-from django.shortcuts import redirect, render, get_object_or_404
+from django.contrib.admin.views.decorators import staff_member_required
+from django.contrib.auth.decorators import login_required
+from django.shortcuts import get_object_or_404, redirect, render
 
 from . import forms, models
 
 
+@login_required
 def new_budget(request):
     '''Create new budget.'''
     if request.method == "GET":
@@ -21,6 +24,7 @@ def new_budget(request):
     return result
 
 
+@login_required
 def new_reimburse(request):
     '''Create new reimburse.'''
     if request.method == "GET":
@@ -36,6 +40,7 @@ def new_reimburse(request):
     return result
 
 
+@login_required
 def list_budgets(request):
     '''List all budgets from active user.'''
     budgets = models.Budget.objects.filter(requester=request.user)
@@ -47,6 +52,7 @@ def list_budgets(request):
     return render(request, 'request_list.html', data)
 
 
+@login_required
 def list_reimburses(request):
     '''List all reimburses from active user.'''
     reimburses = models.Reimburse.objects.filter(requester=request.user)
@@ -58,6 +64,7 @@ def list_reimburses(request):
     return render(request, 'request_list.html', data)
 
 
+@staff_member_required(login_url='login')
 def list_all_reimburses(request):
     '''List all reimburses.'''
     reimburses = models.Reimburse.objects.all()
@@ -69,6 +76,7 @@ def list_all_reimburses(request):
     return render(request, 'request_list.html', data)
 
 
+@staff_member_required(login_url='login')
 def list_budget_approvals(request):
     '''List budget approvals.'''
     budgets = models.Budget.objects.filter(approval=None)
@@ -82,6 +90,7 @@ def list_budget_approvals(request):
     return render(request, 'approval_list.html', data)
 
 
+@staff_member_required(login_url='login')
 def list_reimburse_approvals(request):
     '''List reimburse approvals.'''
     reimburses = models.Reimburse.objects.filter(approval=None)
@@ -104,6 +113,7 @@ def get_request_or_404(request_id):
         return req.budget
 
 
+@login_required
 def show_request(request, request_id):
     '''Show request page.'''
     req = get_request_or_404(request_id)
@@ -118,6 +128,7 @@ def show_request(request, request_id):
     return render(request, 'request.html', data)
 
 
+@staff_member_required(login_url='login')
 def set_approval(request, request_id, approval):
     '''Set approval for request.'''
     req = get_object_or_404(models.Request, pk=request_id)

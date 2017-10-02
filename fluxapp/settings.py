@@ -36,6 +36,7 @@ INSTALLED_APPS = conf.installedapps.value
 MIDDLEWARE_CLASSES = conf.middlewareclasses.value
 
 ROOT_URLCONF = 'fluxapp.urls'
+LOGIN_URL = 'login'
 
 TEMPLATES = [
     {
@@ -136,4 +137,3 @@ STATICFILES_DIRS = (
 # Simplified static file serving.
 # https://warehouse.python.org/project/whitenoise/
 STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
-
