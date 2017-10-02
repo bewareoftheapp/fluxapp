@@ -13,13 +13,6 @@
     <link rel="stylesheet" href="/static/css/fluxapp.css" />
 </head>
 <body>
-<!--
-<div class="grid-y grid-margin-y">
-    <div class="small-12 cell text-center">
-        <h1><a href="{% url 'index' %}">FluxApp</a></h1>
-    </div>
-</div>
--->
 
 <div class="top-bar">
     <div class="top-bar-left">
@@ -28,12 +21,18 @@
         </ul>
     </div>
     <div class="top-bar-right">
+        {% if user.is_authenticated %}
         <ul class="menu">
             <li><a href="{% url 'index' %}">Início</a></li>
+            <li><a href="{% url 'logout' %}">Sair</a></li>
         </ul>
+        {% else %}
+        <ul class="menu">
+            <li><a href="{% url 'login' %}">Entrar</a></li>
+        </ul>
+        {% endif %}
     </div>
 </div>
-
 
 {% block content %}
 {% endblock %}
@@ -43,8 +42,8 @@
 <script src="/static/js/vendor/foundation.min.js"></script>
 <script src="/static/js/app.js"></script>
 <script>
-            $(document).foundation();
-        </script>
+    $(document).foundation();
+</script>
 
 </body>
 </html>
