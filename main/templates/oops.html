@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="grid-container">
+    <article class="grid-y grid-padding-y">
+        <header class="small-12 cell"><h3>Oops!</h3></header>
+        <section class="small-12 cell">
+            {{ err_msg }}
+        </section>
+        <section class="small-12 cell text-center">
+            <a href="{{ btn_href }}" class="success button">{{ btn_msg }}</a>
+        </section>
+    </article>
+</div>
+
+{% endblock %}

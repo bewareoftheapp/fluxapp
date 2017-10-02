@@ -4,6 +4,7 @@ from django.contrib.admin.views.decorators import staff_member_required
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
 from django.shortcuts import get_object_or_404, redirect, render
+from django.core.urlresolvers import reverse
 
 from . import forms, models
 
@@ -55,9 +56,9 @@ def logout_user(request):
     return redirect('login')
 
 
+@staff_member_required(login_url='login')
 def new_user(request):
     '''Start the new user process generating a registration token.'''
-    # FIXME Issue #18 Can register user while logged in.
     data = {'user': request.user}
     if request.method == "GET":
         data['registration_form'] = forms.RegistrationTokenForm()
@@ -108,6 +109,14 @@ def validate_token(request, registration_token):
 
 def register_user(request):
     '''Register a new user to system.'''
+    if request.user.is_authenticated:
+        data = {
+            'err_msg': 'Para registrar um novo usuário você precisa sair de sua conta.',
+            'btn_msg': 'Sair',
+            'btn_href': reverse('logout')
+        }
+        return render(request, 'oops.html', data)
+
     data = {}
     if request.method == "GET" and request.GET.get('token'):
         registration_token = get_object_or_404(models.RegistrationToken, token=request.GET['token'])
