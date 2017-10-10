@@ -11,10 +11,8 @@ import main.views
 
 admin.autodiscover()
 
-
-# Examples:
-# url(r'^$', 'fluxapp.views.home', name='home'),
-# url(r'^blog/', include('blog.urls')),
+handler404 = 'main.views.handler404'
+handler500 = 'main.views.handler500'
 
 urlpatterns = [
     url(r'^$', main.views.index, name='index'),

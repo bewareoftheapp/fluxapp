@@ -21,16 +21,20 @@ def get_login_data(request):
 
 def login_GET(request):
     '''Respond a GET request to login page.'''
-    return render(request, 'login.html')
+    nextPage = request.GET.get('next')
+    data = {}
+    if nextPage:
+        data['next'] = nextPage
+    return render(request, 'login.html', data)
 
 
 def login_POST(request):
     '''Respond a POST request to login page.'''
-    login_data = get_login_data(request)
-    auth = authenticate(username=login_data[0], password=login_data[1])
+    user_name, password = get_login_data(request)
+    auth = authenticate(username=user_name, password=password)
     if auth:
         login(request, auth)
-        nextPage = request.POST.get('next')
+        nextPage = request.GET.get('next')
         response = redirect(str(nextPage) if nextPage else 'index')
     else:
         data = {'auth_error': True}
