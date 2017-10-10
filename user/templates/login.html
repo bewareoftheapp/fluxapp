@@ -8,7 +8,7 @@
 <div class="grid-x grid-margin-x login-box">
     <div class="small-10 medium-6 large-4 small-offset-1 medium-offset-3 large-offset-4 cell">
         <div class="callout">
-            <form method="POST" action="{% url 'login' %}">
+            <form method="POST" action="{% url 'login' %}{% if next %}?next={{ next }}{% endif %}">
                 {% csrf_token %}
                 {% if auth_error %}
                 <div>Usuário ou senha incorretos.</div>
