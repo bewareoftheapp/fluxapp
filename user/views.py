@@ -113,7 +113,7 @@ def validate_token(request, registration_token):
 
 def register_user(request):
     '''Register a new user to system.'''
-    if request.user.is_authenticated:
+    if request.user.is_authenticated():
         data = {
             'err_msg': 'Para registrar um novo usuário você precisa sair de sua conta.',
             'btn_msg': 'Sair',
