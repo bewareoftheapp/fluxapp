@@ -7,8 +7,8 @@ Controle de verbas e reembolso.
 
 * Gerar convites
 * Registrar usuário a partir de um convite
-* Tornar usuário administrador
-* Revogar usuário administrador
+* Usuário administrador pode tornar outros usuários como administrador
+* Usuário administrador pode revogar poder administrativo de outros usuários
 * Usuários comuns e administradores podem pedir reembolso
 * Usuários administradores podem aprovar reembolso
 * Usuários podem participar de uma linha de discussão a respeito de um reembolso
