@@ -5,7 +5,6 @@ import hashlib
 import random
 import string
 
-from django.contrib.auth.models import User as UserModel
 from django.core.urlresolvers import reverse
 from django.db import models
 
@@ -16,18 +15,6 @@ def _generate_token():
     token = hashlib.sha1()
     token.update(rand_str)
     return token.hexdigest()
-
-# TODO Create a department leadership class.
-
-
-class Department(models.Model):
-    '''Represent a department.'''
-
-    name = models.CharField(max_length=128)
-    members = models.ForeignKey(UserModel)
-
-    def __str__(self):
-        return str(self.name)
 
 
 class RegistrationToken(models.Model):
