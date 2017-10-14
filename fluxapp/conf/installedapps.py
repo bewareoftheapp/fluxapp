@@ -8,4 +8,6 @@ value = (
     'main',
     'expense',
     'user',
+    'department',
+    'member '
 )
