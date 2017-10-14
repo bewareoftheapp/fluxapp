@@ -1,3 +1,5 @@
+'''Department models.'''
+
 from django.contrib.auth.models import User as UserModel
 from django.db import models
 
