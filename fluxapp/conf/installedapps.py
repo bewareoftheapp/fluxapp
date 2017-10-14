@@ -9,5 +9,5 @@ value = (
     'expense',
     'user',
     'department',
-    'member '
+    'member'
 )
