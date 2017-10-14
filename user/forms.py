@@ -51,7 +51,8 @@ class UserForm(forms.ModelForm):
         }
         error_messages = {
             'username': {
-                'required': 'Por favor, informe um nome de usuário.'
+                'required': 'Por favor, informe um nome de usuário.',
+                'unique': 'Este nome de usuário já existe.'
             },
             'first_name': {
                 'required': 'Por favor, nos diga qual o seu nome.'
