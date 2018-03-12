@@ -1,6 +1,7 @@
-from .models import Budget, Reimburse
-
+'''Forms for expense app.'''
 from django.forms import ModelForm
+
+from .models import Budget, Reimburse
 
 
 class BudgetForm(ModelForm):
