@@ -55,7 +55,7 @@ def list_budgets(request):
 @login_required
 def list_reimburses(request):
     '''List all reimburses from active user.'''
-    reimburses = models.Reimburse.objects.filter(requester=request.user)
+    reimburses = models.Reimburse.objects.filter(requester=request.user).order_by('-timestamp')
     data = {
         'show_requester': False,
         'title': 'Meus pedidos de reembolso',
@@ -67,7 +67,7 @@ def list_reimburses(request):
 @staff_member_required(login_url='login')
 def list_all_reimburses(request):
     '''List all reimburses.'''
-    reimburses = models.Reimburse.objects.all()
+    reimburses = models.Reimburse.objects.all().order_by('-timestamp')
     data = {
         'show_requester': True,
         'title': 'Todos os pedidos de reembolso',
@@ -93,7 +93,7 @@ def list_budget_approvals(request):
 @staff_member_required(login_url='login')
 def list_reimburse_approvals(request):
     '''List reimburse approvals.'''
-    reimburses = models.Reimburse.objects.filter(approval=None)
+    reimburses = models.Reimburse.objects.filter(approval=None).order_by('-timestamp')
     data = {
         'title': 'Aprovações de reembolso',
         'sections':[{
