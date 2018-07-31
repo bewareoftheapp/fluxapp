@@ -6,6 +6,7 @@
     <h3>Requisição #{{ request.id }}: {{ request.type }}</h3>
     <header class="callout">
         <div>Requerente: {{ request.requester.first_name }} {{ request.requester.last_name }}</div>
+        <div>Data do pedido: {{ request.timestamp }}</div>
         <div>Valor: R$ {{ request.value|floatformat:2 }}</div>
         <div>
             <div>Descrição:</div>
