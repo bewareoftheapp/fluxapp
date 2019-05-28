@@ -1,0 +1,6 @@
+
+  source ./venv/bin/activate
+export secret_key="5b71c94f-1d43-426f-a477-e34669002202"
+export TEST="True"
+python manage.py migrate
+
