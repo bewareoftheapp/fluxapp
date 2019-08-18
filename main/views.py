@@ -1,6 +1,7 @@
 '''Main views.'''
 
 from django.contrib.auth.decorators import login_required
+from django.contrib.admin.views.decorators import staff_member_required
 from django.shortcuts import render
 from django.core.urlresolvers import reverse
 
@@ -40,3 +41,7 @@ def handler500(request):
         'btn_href': reverse('index')
     }
     return render(request, 'oops.html', data)
+
+@staff_member_required(login_url='login')
+def dump(request):
+    return index(request)
